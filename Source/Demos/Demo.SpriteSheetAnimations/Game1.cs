@@ -16,7 +16,6 @@ namespace Demo.SpriteSheetAnimations
         // ReSharper disable once NotAccessedField.Local
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
         private Camera2D _camera;
-        private FramesPerSecondCounter _fpsCounter;
         private SpriteBatch _spriteBatch;
         private TiledMap _tiledMap;
         private ViewportAdapter _viewportAdapter;
@@ -28,13 +27,10 @@ namespace Demo.SpriteSheetAnimations
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.Title = $"MonoGame.Extended - {GetType().Name}";
-            Window.Position = Point.Zero;
         }
 
         protected override void Initialize()
         {
-            _fpsCounter = new FramesPerSecondCounter();
             _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
             _camera = new Camera2D(_viewportAdapter)
             {
@@ -45,6 +41,8 @@ namespace Demo.SpriteSheetAnimations
                 Position = new Vector2(408, 270)
             };
 
+            Window.Title = $"MonoGame.Extended - {GetType().Name}";
+            Window.Position = Point.Zero;
             Window.AllowUserResizing = true;
 
             base.Initialize();
@@ -126,8 +124,6 @@ namespace Demo.SpriteSheetAnimations
 
         protected override void Draw(GameTime gameTime)
         {
-            _fpsCounter.Update(gameTime);
-
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin(transformMatrix: _camera.GetViewMatrix());
@@ -138,7 +134,7 @@ namespace Demo.SpriteSheetAnimations
             _zombie.Draw(_spriteBatch);
             _spriteBatch.End();
 
-            //_spriteBatch.Begin();            
+            //_spriteBatch.Begin();
             //_spriteBatch.DrawString(_bitmapFont, string.Format("FPS: {0} Zoom: {1}", _fpsCounter.AverageFramesPerSecond, _camera.Zoom), new Vector2(5, 5), new Color(0.5f, 0.5f, 0.5f));
             //_spriteBatch.End();
 
